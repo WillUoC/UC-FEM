@@ -8,24 +8,30 @@ __doc__ = """Class holder file that creates necessary objects for FEM"""
 
 # Imports
 import numpy as np
-import sympy as sym
 
 class Node():
     # Class vars
-    TOTAL_NODES = 1
+    TOTAL_NODES = 0
 
     # Init
     def __init__(self, x: float, y: float = 0, z: float = 0) -> None:
+        """Initializes a Node object.
+
+        Args:
+            x (float): the x-coordinate.
+            y (float, optional): the y-coordinate. Defaults to 0.
+            z (float, optional): the z-coordinate. Defaults to 0.
+        """
         # Coordinates
         self.__x = x
         self.__y = y
         self.__z = z
 
-        # Give node a number
-        self.__num = Node.TOTAL_NODES
-
         # Increase total node counter
         Node.TOTAL_NODES += 1
+
+        # Give node a number
+        self.__num = Node.TOTAL_NODES
 
     # Properties
     @property
@@ -64,7 +70,15 @@ class Element():
     TOTAL_ELEMENTS = 0
 
     # Init
-    def __init__(self, n1: Node, n2: Node, A: float, E: float):
+    def __init__(self, n1: Node, n2: Node, A: float, E: float) -> None:
+        """Initializes an Element object.
+
+        Args:
+            n1 (Node): node 1.
+            n2 (Node): node 2.
+            A (float): cross sectional area.
+            E (float): Young's modulus.
+        """
         # Constants
         self.__n1 = n1
         self.__n2 = n2
@@ -78,15 +92,15 @@ class Element():
         self.__n = (self.__n2.z - self.__n1.z)/self.__le
 
         # Forces
-        self.__fx = sym.symbols('f_x')
-        self.__fy = sym.symbols('f_y')
-        self.__fz = sym.symbols('f_z')
-        self.__fsx1 = sym.symbols('f_sx_1')
-        self.__fsy1 = sym.symbols('f_sy_1')
-        self.__fsz1 = sym.symbols('f_sz_1')
-        self.__fsx2 = sym.symbols('f_sx_2')
-        self.__fsy2 = sym.symbols('f_sy_2')
-        self.__fsz2 = sym.symbols('f_sz_2')
+        self.__fx = 0
+        self.__fy = 0
+        self.__fz = 0
+        self.__fsx1 = 0
+        self.__fsy1 = 0
+        self.__fsz1 = 0
+        self.__fsx2 = 0
+        self.__fsy2 = 0
+        self.__fsz2 = 0
 
         # Increase total element count
         Element.TOTAL_ELEMENTS += 1
@@ -125,37 +139,49 @@ class Element():
         return self.__n
 
     @property
-    def fx(self) -> sym.Symbol:
+    def fx(self) -> float:
         return self.__fx
 
+    @fx.setter
+    def fx(self, val: float) -> None:
+        self.__fx = val
+
     @property
-    def fy(self) -> sym.Symbol:
+    def fy(self) -> float:
         return self.__fy
 
-    @property
-    def fz(self) -> sym.Symbol:
-        return self.__fz
+    @fy.setter
+    def fy(self, val: float) -> None:
+        self.__fy = val
 
     @property
-    def fsx1(self) -> sym.Symbol:
+    def fz(self) -> float:
+        return self.__fz
+
+    @fz.setter
+    def fz(self, val: float) -> None:
+        self.__fz = val
+
+    @property
+    def fsx1(self) -> float:
         return self.__fsx1
 
     @property
-    def fsy1(self) -> sym.Symbol:
+    def fsy1(self) -> float:
         return self.__fsy1
 
     @property
-    def fsz1(self) -> sym.Symbol:
+    def fsz1(self) -> float:
         return self.__fsz1
 
     @property
-    def fsx2(self) -> sym.Symbol:
+    def fsx2(self) -> float:
         return self.__fsx2
 
     @property
-    def fsy2(self) -> sym.Symbol:
+    def fsy2(self) -> float:
         return self.__fsy2
 
     @property
-    def fsz2(self) -> sym.Symbol:
+    def fsz2(self) -> float:
         return self.__fsz2
