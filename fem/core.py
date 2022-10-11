@@ -166,22 +166,46 @@ class Element():
     def fsx1(self) -> float:
         return self.__fsx1
 
+    @fsx1.setter
+    def fsx1(self, val: float) -> None:
+        self.__fsx1 = val
+
     @property
     def fsy1(self) -> float:
         return self.__fsy1
+
+    @fsy1.setter
+    def fsy1(self, val: float) -> None:
+        self.__fsy1 = val
 
     @property
     def fsz1(self) -> float:
         return self.__fsz1
 
+    @fsz1.setter
+    def fsz1(self, val: float) -> None:
+        self.__fsz1 = val
+
     @property
     def fsx2(self) -> float:
         return self.__fsx2
+
+    @fsx2.setter
+    def fsx2(self, val: float) -> None:
+        self.__fsx2 = val
 
     @property
     def fsy2(self) -> float:
         return self.__fsy2
 
+    @fsy2.setter
+    def fsy2(self, val: float) -> None:
+        self.__fsy2 = val
+
     @property
     def fsz2(self) -> float:
         return self.__fsz2
+
+    @fsz2.setter
+    def fsz2(self, val: float) -> None:
+        self.__fsz2 = val
