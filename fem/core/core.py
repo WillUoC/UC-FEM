@@ -1,7 +1,7 @@
 __author__ = 'Justin Panchula'
 __copyright__ = 'Copyright 2022'
-__credits__ = 'Justin Panchula'
-__license__ = 'MIT License'
+__credits__ = 'Justin Panchula, Will Black'
+__license__ = 'GNU GPLv3'
 __version__ = '1.0.0'
 __status__ = 'Production'
 __doc__ = """Class holder file that creates necessary objects for FEM"""
@@ -9,12 +9,15 @@ __doc__ = """Class holder file that creates necessary objects for FEM"""
 # Imports
 import numpy as np
 
+# Typing
+from typing import Any
+
 class Node():
     # Class vars
     TOTAL_NODES = 0
 
     # Init
-    def __init__(self, x: float, y: float = 0, z: float = 0) -> None:
+    def __init__(self, x: float, y: float = 0) -> None:
         """Initializes a Node object.
 
         Args:
@@ -25,12 +28,18 @@ class Node():
         # Coordinates
         self.__x = x
         self.__y = y
-        self.__z = z
 
         # Forces
-        self.__fx = 0
-        self.__fy = 0
-        self.__fz = 0
+        self.__fx = None
+        self.__fy = None
+
+        # Moments
+        self.__Mz = None
+
+        # Displacements
+        self.__D1 = None
+        self.__D2 = None
+        self.__D3 = None
 
         # Increase total node counter
         Node.TOTAL_NODES += 1
@@ -47,7 +56,6 @@ class Node():
     def x(self, val: float) -> None:
         self.__x = val
 
-    # Properties
     @property
     def y(self) -> float:
         return self.__y
@@ -56,17 +64,8 @@ class Node():
     def y(self, val: float) -> None:
         self.__y = val
 
-    # Properties
     @property
-    def z(self) -> float:
-        return self.__z
-
-    @z.setter
-    def z(self, val: float) -> None:
-        self.__z = val
-
-    @property
-    def fx(self) -> float:
+    def fx(self) -> Any:
         return self.__fx
 
     @fx.setter
@@ -74,7 +73,7 @@ class Node():
         self.__fx = val
 
     @property
-    def fy(self) -> float:
+    def fy(self) -> Any:
         return self.__fy
 
     @fy.setter
@@ -82,23 +81,47 @@ class Node():
         self.__fy = val
 
     @property
-    def fz(self) -> float:
-        return self.__fz
+    def Mz(self) -> Any:
+        return self.__Mz
 
-    @fz.setter
-    def fz(self, val: float) -> None:
-        self.__fz = val
+    @Mz.setter
+    def Mz(self, val: float) -> None:
+        self.__Mz = val
+
+    @property
+    def D1(self) -> Any:
+        return self.__D1
+
+    @D1.setter
+    def D1(self, val: float) -> None:
+        self.__D1 = val
+
+    @property
+    def D2(self) -> Any:
+        return self.__D2
+
+    @D2.setter
+    def D2(self, val: float) -> None:
+        self.__D2 = val
+
+    @property
+    def D3(self) -> Any:
+        return self.__D3
+
+    @D3.setter
+    def D3(self, val: float) -> None:
+        self.__D3 = val
 
     @property
     def num(self) -> int:
         return self.__num
 
-class Element():
+class _Element():
     # Class vars
     TOTAL_ELEMENTS = 0
 
     # Init
-    def __init__(self, n1: Node, n2: Node, A: float, E: float) -> None:
+    def __init__(self, n1: Node, n2: Node, rho: float, A: float, E: float, Iz: float) -> None:
         """Initializes an Element object.
 
         Args:
@@ -110,17 +133,21 @@ class Element():
         # Constants
         self.__n1 = n1
         self.__n2 = n2
-        self.__le = np.sqrt((self.__n2.x - self.__n1.x)**2 + (self.__n2.y - self.__n1.y)**2 + (self.__n2.z - self.__n1.z)**2)
+        self.__le = np.sqrt((self.__n2.x - self.__n1.x)**2 + (self.__n2.y - self.__n1.y)**2)
+        self.__rho = rho
         self.__A = A
         self.__E = E
+        self.__Iz = Iz
 
         # Created values
-        self.__l = (self.__n2.x - self.__n1.x)/self.__le
-        self.__m = (self.__n2.y - self.__n1.y)/self.__le
-        self.__n = (self.__n2.z - self.__n1.z)/self.__le
+        self.__lx = (self.__n2.x - self.__n1.x)/self.__le
+        self.__mx = (self.__n2.y - self.__n1.y)/self.__le
+
+        self.__ly = -(self.__n2.x - self.__n1.x)/self.__le
+        self.__my = (self.__n2.y - self.__n1.y)/self.__le
 
         # Increase total element count
-        Element.TOTAL_ELEMENTS += 1
+        _Element.TOTAL_ELEMENTS += 1
 
     # Properties
     @property
@@ -136,6 +163,14 @@ class Element():
         return self.__le
 
     @property
+    def rho(self) -> float:
+        return self.__rho
+
+    @rho.setter
+    def rho(self, val: float) -> None:
+        self.__rho = val
+
+    @property
     def A(self) -> float:
         return self.__A
 
@@ -144,13 +179,21 @@ class Element():
         return self.__E
 
     @property
-    def l(self) -> float:
-        return self.__l
+    def Iz(self) -> float:
+        return self.__Iz
 
     @property
-    def m(self) -> float:
-        return self.__m
+    def lx(self) -> float:
+        return self.__lx
 
     @property
-    def n(self) -> float:
-        return self.__n
+    def mx(self) -> float:
+        return self.__mx
+
+    @property
+    def ly(self) -> float:
+        return self.__ly
+
+    @property
+    def my(self) -> float:
+        return self.__my
