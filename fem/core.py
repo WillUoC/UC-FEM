@@ -27,6 +27,11 @@ class Node():
         self.__y = y
         self.__z = z
 
+        # Forces
+        self.__fx = 0
+        self.__fy = 0
+        self.__fz = 0
+
         # Increase total node counter
         Node.TOTAL_NODES += 1
 
@@ -61,9 +66,32 @@ class Node():
         self.__z = val
 
     @property
+    def fx(self) -> float:
+        return self.__fx
+
+    @fx.setter
+    def fx(self, val: float) -> None:
+        self.__fx = val
+
+    @property
+    def fy(self) -> float:
+        return self.__fy
+
+    @fy.setter
+    def fy(self, val: float) -> None:
+        self.__fy = val
+
+    @property
+    def fz(self) -> float:
+        return self.__fz
+
+    @fz.setter
+    def fz(self, val: float) -> None:
+        self.__fz = val
+
+    @property
     def num(self) -> int:
         return self.__num
-
 
 class Element():
     # Class vars
@@ -90,17 +118,6 @@ class Element():
         self.__l = (self.__n2.x - self.__n1.x)/self.__le
         self.__m = (self.__n2.y - self.__n1.y)/self.__le
         self.__n = (self.__n2.z - self.__n1.z)/self.__le
-
-        # Forces
-        self.__fx = 0
-        self.__fy = 0
-        self.__fz = 0
-        self.__fsx1 = 0
-        self.__fsy1 = 0
-        self.__fsz1 = 0
-        self.__fsx2 = 0
-        self.__fsy2 = 0
-        self.__fsz2 = 0
 
         # Increase total element count
         Element.TOTAL_ELEMENTS += 1
@@ -137,75 +154,3 @@ class Element():
     @property
     def n(self) -> float:
         return self.__n
-
-    @property
-    def fx(self) -> float:
-        return self.__fx
-
-    @fx.setter
-    def fx(self, val: float) -> None:
-        self.__fx = val
-
-    @property
-    def fy(self) -> float:
-        return self.__fy
-
-    @fy.setter
-    def fy(self, val: float) -> None:
-        self.__fy = val
-
-    @property
-    def fz(self) -> float:
-        return self.__fz
-
-    @fz.setter
-    def fz(self, val: float) -> None:
-        self.__fz = val
-
-    @property
-    def fsx1(self) -> float:
-        return self.__fsx1
-
-    @fsx1.setter
-    def fsx1(self, val: float) -> None:
-        self.__fsx1 = val
-
-    @property
-    def fsy1(self) -> float:
-        return self.__fsy1
-
-    @fsy1.setter
-    def fsy1(self, val: float) -> None:
-        self.__fsy1 = val
-
-    @property
-    def fsz1(self) -> float:
-        return self.__fsz1
-
-    @fsz1.setter
-    def fsz1(self, val: float) -> None:
-        self.__fsz1 = val
-
-    @property
-    def fsx2(self) -> float:
-        return self.__fsx2
-
-    @fsx2.setter
-    def fsx2(self, val: float) -> None:
-        self.__fsx2 = val
-
-    @property
-    def fsy2(self) -> float:
-        return self.__fsy2
-
-    @fsy2.setter
-    def fsy2(self, val: float) -> None:
-        self.__fsy2 = val
-
-    @property
-    def fsz2(self) -> float:
-        return self.__fsz2
-
-    @fsz2.setter
-    def fsz2(self, val: float) -> None:
-        self.__fsz2 = val

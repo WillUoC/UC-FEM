@@ -5,4 +5,5 @@
     "python.linting.flake8Args": [
         "--ignore=E225, E226, E302, E305, E501, E702, E741, E743, W292, W504"
     ],
+    "python.analysis.typeCheckingMode": "basic",
 }
