@@ -8,9 +8,10 @@ __doc__ = """Class holder file that creates necessary objects for FEM"""
 
 # Imports
 import numpy as np
+import numpy.typing as npt
 
 # Typing
-from typing import Any
+from typing import Any, Union
 
 class Node():
     # Class vars
@@ -146,8 +147,18 @@ class _Element():
         self.__ly = -(self.__n2.x - self.__n1.x)/self.__le
         self.__my = (self.__n2.y - self.__n1.y)/self.__le
 
+        self.__fx = 0
+        self.__fy = 0
+
+        self.__Ke = None
+        self.__Me = None
+        self.__Fe = None
+
         # Increase total element count
         _Element.TOTAL_ELEMENTS += 1
+
+    def KMF(self) -> None:
+        return None
 
     # Properties
     @property
@@ -197,3 +208,31 @@ class _Element():
     @property
     def my(self) -> float:
         return self.__my
+
+    @property
+    def fx(self) -> float:
+        return self.__fx
+
+    @fx.setter
+    def fx(self, val: float) -> None:
+        self.__fx = val
+
+    @property
+    def fy(self) -> float:
+        return self.__fy
+
+    @fy.setter
+    def fy(self, val: float) -> None:
+        self.__fy = val
+
+    @property
+    def Ke(self) -> Union[np.ndarray, None]:
+        return self.__Ke
+
+    @property
+    def Me(self) -> Union[np.ndarray, None]:
+        return self.__Me
+
+    @property
+    def Fe(self) -> Union[list[Union[float, None]], None]:
+        return self.__Fe

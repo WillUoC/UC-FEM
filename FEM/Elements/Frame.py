@@ -31,10 +31,10 @@ class Frame(_Element):
         super().__init__(n1, n2, rho, A, E, Iz)
 
         # Frame forces
-        self.__fx = None
-        self.__fy = None
+        self.__fx = 0
+        self.__fy = 0
 
-    def KMF(self, fx: float, fy: float, m1: float, m2: float) -> None:
+    def KMF(self) -> None:
         """Sets the Ke, Me, and Fe matrices of the element.
 
         Args:
@@ -44,10 +44,12 @@ class Frame(_Element):
             m2 (float): the moment at Node 2 (z-axis).
         """
         # Reassign
-        self.__fx = fx
-        self.__fy = fy
-        self.n1.Mz = m1
-        self.n2.Mz = m2
+        # self.__fx = fx
+        # self.__fy = fy
+
+        # TODO: Bring this code to the Node class
+        # m1 = self.n1.Mz
+        # m2 = self.n2.Mz
 
         # Matrices
         T = np.array([
